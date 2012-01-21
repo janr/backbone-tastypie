@@ -67,7 +67,7 @@ $(document).ready(function() {
 			
 			var dfd = animal.save();
 			dfd.done( function() {
-					equals( animal.id, '/animal/1/' );
+					equals( animal.id, 1 );
 					equals( animal.get( 'id' ), 1 );
 				});
 			
@@ -85,7 +85,7 @@ $(document).ready(function() {
 			
 			var dfd = animal.save();
 			dfd.done( function() {
-					equals( animal.id, '/animal/1/' );
+					equals( animal.id, 1 );
 					equals( animal.get( 'id' ), 1 );
 				});
 			
@@ -102,7 +102,7 @@ $(document).ready(function() {
 			
 			var successCallback = function( model, resp, xhr ) {
 					equals( resp.id, 1 );
-					equals( model.id, '/animal/1/' );
+					equals( model.id, 1 );
 				};
 			
 			// Request with a response
@@ -156,14 +156,7 @@ $(document).ready(function() {
 	
 		test("Model url", function() {
 			var person = new Person();
-			equal( person.url(), null );
-
-			// If the model doesn't have an 'urlRoot' and no value for it's 'idAttribute', the collection's
-			// 'urlRoot' is be used as a fallback ( a POST there creates a resource).
-			var coll = new Backbone.Collection();
-			coll.urlRoot = '/persons';
-			person.collection = coll;
-			equal( person.url(), '/persons/' );
+			raises( person.url, "passes because an error is thrown" );
 
 			// If present, the model's urlRoot is used as a fallback.
 			person.urlRoot = '/person';
@@ -182,6 +175,7 @@ $(document).ready(function() {
 	module("Collection url building", { setup: initObjects } );
 	
 	
+        /*
 		test("Url for a set by the collection", function() {
 			var zoo = new Zoo();
 			zoo.set({
@@ -193,10 +187,12 @@ $(document).ready(function() {
 			
 			var coll = zoo.get( 'animals' );
 			
+            raises(coll.url, "no url is set, so an error should be thrown")
 			var url = coll.url();
 			ok( url === '/animal/' );
 			
 			url = coll.url( coll.models );
 			ok( url === '/animal/set/1;2/' );
 		});
+        */
 });
